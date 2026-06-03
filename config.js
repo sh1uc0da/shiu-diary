@@ -17,11 +17,11 @@ window.SHIYU_CONFIG = {
 
   // 1) Apps Script Web App 網址（部署後得到的 https://script.google.com/macros/s/..../exec）
   //    留空 = 展示模式
-  BACKEND_URL: "",
+  BACKEND_URL: "https://script.google.com/macros/s/AKfycbzWWyGlyUncq6LLxqpUatHGNpP6XB_4tvPrnc9-j_uX1pj_fc5IbuxgX4igVn_VU0_Dew/exec",
 
   // 2) Google OAuth 用戶端 ID（在 Google Cloud Console 建立，結尾是 .apps.googleusercontent.com）
   //    留空 = 用模擬登入（展示模式）
-  GOOGLE_CLIENT_ID: "",
+  GOOGLE_CLIENT_ID: "683756713113-l76pkfi7q7md97uf0svpfo8kmmufikbr.apps.googleusercontent.com",
 
   // 3) 後台密碼（僅「展示模式」使用；正式模式的密碼放在 Apps Script 後端，不會外洩）
   DEMO_ADMIN_PASSWORD: "rain2026",
