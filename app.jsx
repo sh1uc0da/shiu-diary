@@ -3,11 +3,11 @@
    ============================================================ */
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "accent": ["#ec9429", "#cf7d14"],
-  "handFont": "Ma Shan Zheng",
-  "bodyFont": "LXGW WenKai TC",
-  "paperNoise": 0.5,
-  "paperLines": true,
+  "accent": ["#5fcecb", "#2fa9a5"],
+  "handFont": "LXGW WenKai TC",
+  "bodyFont": "Noto Sans TC",
+  "paperNoise": 0.6,
+  "paperLines": false,
   "radius": 16
 }/*EDITMODE-END*/;
 
@@ -75,8 +75,6 @@ function App() {
     );
   }
 
-  const goBackstage = () => { window.location.href = "%E8%A9%A9%E9%9B%A8%E5%9C%8B%E6%97%A5%E8%A8%98-%E5%BE%8C%E5%8F%B0.html"; };
-
   return (
     <div className="stage">
       <div className="app">
@@ -102,7 +100,7 @@ function App() {
         <main className="scroll">
           {route === "feed" && <FeedView user={user} tweaks={t} reloadKey={reloadKey} onRequireLogin={requireLogin} />}
           {route === "write" && <WriteView user={user} tweaks={t} onRequireLogin={requireLogin} onPosted={afterPost} />}
-          {route === "profile" && <ProfileView user={user} tweaks={t} reloadKey={reloadKey} onRequireLogin={requireLogin} onSignOut={signOut} onGoAdmin={goBackstage} />}
+          {route === "profile" && <ProfileView user={user} tweaks={t} reloadKey={reloadKey} onRequireLogin={requireLogin} onSignOut={signOut} />}
         </main>
 
         {/* 底部導覽 */}

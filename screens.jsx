@@ -233,9 +233,8 @@ function ProfileView({ user, onRequireLogin, onSignOut, onGoAdmin, tweaks, reloa
       )}
 
       <hr className="divider" />
-      <div className="spread" style={{ padding: "0 2px 30px" }}>
+      <div style={{ padding: "0 2px 30px", textAlign: "center" }}>
         <button className="signout" onClick={onSignOut}>登出</button>
-        <button className="linkish" onClick={onGoAdmin}><I.lock width="13" height="13" style={{ verticalAlign: "-2px", marginRight: 4 }} />CODA 後台</button>
       </div>
     </div>
   );

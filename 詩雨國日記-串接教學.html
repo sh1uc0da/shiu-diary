@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>詩雨國日記 — 串接教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-tc-webfont/style.css" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#f1e7d2; --card:#fdf8ec; --ink:#4a3a2b; --ink-soft:#7a6450; --ink-faint:#a08a72;
+    --brown:#ec9429; --brown-deep:#cf7d14; --rain:#5fcecb; --rain-deep:#2fa9a5;
+    --leaf:#88a53a; --seal:#e08a1e; --line:#d9c4a1; --line-soft:#e7d8bd;
+    --hand:"Ma Shan Zheng","LXGW WenKai TC",cursive; --body:"LXGW WenKai TC","Noto Serif TC",serif;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:var(--body); color:var(--ink); line-height:1.95;
+    background:radial-gradient(120% 60% at 90% -10%, rgba(95,206,203,.14), transparent 55%),
+               radial-gradient(100% 60% at 0% 110%, rgba(236,148,41,.13), transparent 60%), var(--paper);
+    -webkit-font-smoothing:antialiased; }
+  .wrap{ max-width:760px; margin:0 auto; padding:54px 24px 90px; }
+  .kicker{ font-size:13px; letter-spacing:.3em; color:var(--rain-deep); margin-bottom:10px; }
+  h1{ font-family:var(--hand); font-size:48px; margin:0 0 6px; letter-spacing:.04em; }
+  .lead{ font-size:17px; color:var(--ink-soft); margin:0 0 30px; }
+  .modes{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:0 0 40px; }
+  @media(max-width:560px){ .modes{ grid-template-columns:1fr; } }
+  .mode{ background:var(--card); border:1px solid var(--line-soft); border-radius:16px; padding:18px 20px; box-shadow:0 8px 22px -16px rgba(90,64,38,.4); }
+  .mode h3{ font-family:var(--hand); font-size:22px; margin:0 0 6px; display:flex; align-items:center; gap:8px; }
+  .mode.demo h3{ color:var(--rain-deep); } .mode.live h3{ color:var(--brown-deep); }
+  .mode p{ font-size:14.5px; color:var(--ink-soft); margin:0; }
+  .step{ position:relative; padding:6px 0 30px 64px; }
+  .step::before{ content:""; position:absolute; left:23px; top:44px; bottom:-6px; width:2px; background:var(--line); }
+  .step:last-child::before{ display:none; }
+  .num{ position:absolute; left:0; top:2px; width:46px; height:46px; border-radius:50%;
+    background:linear-gradient(160deg,var(--brown),var(--brown-deep)); color:#fff;
+    display:grid; place-items:center; font-family:var(--hand); font-size:24px; box-shadow:0 6px 14px -6px rgba(207,125,20,.7); }
+  .step h2{ font-size:21px; margin:4px 0 8px; color:var(--ink); }
+  .step p{ font-size:15.5px; color:var(--ink-soft); margin:6px 0; }
+  .step ul{ margin:8px 0; padding-left:20px; } .step li{ font-size:15px; color:var(--ink-soft); margin:4px 0; }
+  code{ background:#efe3cb; color:#8a5a1e; padding:1px 7px; border-radius:6px; font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace; font-size:13.5px; }
+  pre{ background:#2c2118; color:#f0e4d0; border-radius:12px; padding:16px 18px; overflow:auto; font-size:13px; line-height:1.7;
+    font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace; box-shadow:0 10px 26px -16px rgba(0,0,0,.5); }
+  pre .c{ color:#a98a66; } pre .k{ color:#5fcecb; } pre .s{ color:#e0a23f; }
+  .callout{ background:var(--card); border:1px solid var(--line-soft); border-left:4px solid var(--rain); border-radius:12px; padding:13px 18px; margin:14px 0; font-size:14.5px; color:var(--ink-soft); }
+  .callout.warn{ border-left-color:var(--seal); }
+  .callout b{ color:var(--ink); }
+  .path{ font-family:"SF Mono",ui-monospace,monospace; font-size:13px; background:#efe3cb; color:#8a5a1e; padding:2px 8px; border-radius:6px; }
+  hr{ border:none; height:1px; background:var(--line); margin:34px 0;
+    -webkit-mask:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent); }
+  .files{ display:flex; flex-wrap:wrap; gap:8px; margin:10px 0; }
+  .files span{ font-size:13px; background:var(--card); border:1px solid var(--line); border-radius:20px; padding:4px 12px; color:var(--ink-soft); }
+  .end{ text-align:center; margin-top:50px; }
+  .end .drop{ font-family:var(--hand); font-size:30px; color:var(--rain-deep); }
+  a{ color:var(--rain-deep); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kicker">SHIU DIARY · BACKEND SETUP</div>
+  <h1>詩雨國日記・串接教學</h1>
+  <p class="lead">把展示版接上真正的 Google 後端，讓所有粉絲跨裝置共用同一本交換日記。全程免費、不用自己的伺服器。預計 20–30 分鐘。</p>
+
+  <div class="modes">
+    <div class="mode demo">
+      <h3>☂ 展示模式</h3>
+      <p>config.js 兩個值留空即可。資料存在這台瀏覽器、登入是模擬的，適合預覽與試玩。<b>什麼都不用設定。</b></p>
+    </div>
+    <div class="mode live">
+      <h3>✦ 正式模式</h3>
+      <p>填好後端網址與 Google 金鑰後，資料改存 Google 試算表、跨使用者共用，並使用真正的 Google 登入。</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">1</div>
+    <h2>建立一份 Google 試算表</h2>
+    <p>到 <a href="https://sheets.new" target="_blank">sheets.new</a> 建一份新的空白試算表，命名成「詩雨國日記資料庫」。工作表內容稍後由程式自動建立，現在不用手動加任何欄位。</p>
+  </div>
+
+  <div class="step">
+    <div class="num">2</div>
+    <h2>打開 Apps Script，貼上後端程式碼</h2>
+    <p>在剛剛的試算表上方選單點：<b>擴充功能 → Apps Script</b>。把編輯器裡原本的 <code>function myFunction(){}</code> 全部刪掉，改貼上專案裡 <span class="path">Code.gs</span> 的<b>完整內容</b>，按上方 💾 儲存。</p>
+    <div class="callout warn"><b>設定後台密碼：</b>在 <code>Code.gs</code> 最上方把 <code>const ADMIN_PASSWORD = 'rain2026'</code> 改成你自己的密碼——這是 CODA 進後台用的，存在後端、不會外洩給前端。</div>
+  </div>
+
+  <div class="step">
+    <div class="num">3</div>
+    <h2>執行一次 setup 建立工作表</h2>
+    <p>在 Apps Script 上方的函式下拉選單選 <code>setup</code>，按 <b>▶ 執行</b>。第一次會跳出授權視窗，選你的 Google 帳號 →「進階」→「前往（不安全）」→ 允許。完成後試算表會自動長出 <code>Diaries</code>、<code>Comments</code>、<code>Likes</code> 三個工作表。</p>
+  </div>
+
+  <div class="step">
+    <div class="num">4</div>
+    <h2>部署成 Web App，取得後端網址</h2>
+    <p>Apps Script 右上角 <b>部署 → 新增部署作業</b>，齒輪選 <b>網頁應用程式</b>，設定：</p>
+    <ul>
+      <li>說明：隨意（例如 v1）</li>
+      <li><b>執行身分：我</b></li>
+      <li><b>誰可以存取：任何人</b></li>
+    </ul>
+    <p>按部署、授權，複製產生的網址（結尾是 <code>/exec</code>）。</p>
+    <div class="callout">日後修改 <code>Code.gs</code> 後，要回到「部署 → 管理部署作業 → ✏️ 編輯 → 版本選『新版本』」重新部署，改動才會生效。</div>
+  </div>
+
+  <div class="step">
+    <div class="num">5</div>
+    <h2>建立 Google 登入金鑰</h2>
+    <p>到 <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a>：</p>
+    <ul>
+      <li>建立一個新專案（或用現有的）。</li>
+      <li>左側 <b>API 和服務 → OAuth 同意畫面</b>：使用者類型選「外部」，填好 App 名稱、你的信箱即可（測試階段把自己加進測試使用者）。</li>
+      <li><b>API 和服務 → 憑證 → 建立憑證 → OAuth 用戶端 ID</b>，應用程式類型選 <b>網頁應用程式</b>。</li>
+      <li>在 <b>已授權的 JavaScript 來源</b>填入你網站的網域，例如 <code>https://你的名字.github.io</code>（之後上線的網址）。</li>
+      <li>建立後複製 <b>用戶端 ID</b>（結尾 <code>.apps.googleusercontent.com</code>）。</li>
+    </ul>
+    <div class="callout warn"><b>注意：</b>Google 登入只能在「真正的網域」上運作，不能用 <code>file://</code> 直接打開檔案。所以這一步要先想好網站要放哪（見步驟 7）。</div>
+  </div>
+
+  <div class="step">
+    <div class="num">6</div>
+    <h2>把兩個值填進 config.js</h2>
+    <p>打開專案裡的 <span class="path">config.js</span>，把步驟 4 和 5 拿到的兩個值貼進去：</p>
+    <pre><span class="c">// config.js</span>
+window.SHIYU_CONFIG = {
+  BACKEND_URL: <span class="s">"https://script.google.com/macros/s/AKfy.../exec"</span>,
+  GOOGLE_CLIENT_ID: <span class="s">"1234567890-abcdefg.apps.googleusercontent.com"</span>,
+  DEMO_ADMIN_PASSWORD: <span class="s">"rain2026"</span>,
+};</pre>
+    <p>填好後重新整理，前端就會自動切到正式模式（真資料 ＋ 真登入）。</p>
+  </div>
+
+  <div class="step">
+    <div class="num">7</div>
+    <h2>把網站上線</h2>
+    <p>把整個專案資料夾（所有 <code>.html</code>、<code>.css</code>、<code>.js</code>、<code>.jsx</code>）放到任一免費靜態空間，例如 <b>GitHub Pages</b>、<b>Netlify</b>、<b>Cloudflare Pages</b>。上線後的網址，記得回到步驟 5 加進「已授權的 JavaScript 來源」。</p>
+    <div class="files">
+      <span>詩雨國日記.html</span><span>詩雨國日記-後台.html</span><span>config.js</span><span>data.js</span>
+      <span>styles.css</span><span>components.jsx</span><span>diarycard.jsx</span><span>screens.jsx</span>
+      <span>admin.jsx</span><span>app.jsx</span><span>tweaks-panel.jsx</span>
+    </div>
+  </div>
+
+  <hr />
+
+  <h2 style="font-family:var(--hand); font-size:26px;">隱私與安全</h2>
+  <ul>
+    <li><b>匿名（維持現狀）：</b>時間軸與留言只顯示暱稱與標籤，其他粉絲看不到真實姓名／信箱。</li>
+    <li><b>私密日記：</b>後端只在驗證後台密碼後才回傳私密內容，外人就算拿到網址也讀不到。</li>
+    <li><b>不要把試算表設成公開分享</b>——資料一律只透過 Apps Script 進出。</li>
+    <li><b>後台密碼</b>存在 <code>Code.gs</code>，不在前端，不會被使用者看到。</li>
+  </ul>
+
+  <div class="end">
+    <div class="drop">☂ 設定完成，詩雨國開門了 ☂</div>
+  </div>
+</div>
+</body>
+</html>
